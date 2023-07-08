@@ -1,0 +1,136 @@
+{% extends 'xmlreader/base.html' %}
+
+{% block content %}
+
+<h1>DMARC Report</h1>
+
+<h2>Reporting Organization Details</h2>
+<div class="row">
+  <div class="col-md-2"><h6>Organization: </h6></div>
+  <div class="col-md-4">{{ data_dict.feedback.report_metadata.org_name }}</div>
+  <div class="col-md-2"><h6>Email: </h6></div>
+  <div class="col-md-4">{{ data_dict.feedback.report_metadata.email }}</div>
+</div>
+<div class="row">
+  <div class="col-md-2"><h6>Additional Contact Info: </h6></div>
+  <div class="col-md-4">{{ data_dict.feedback.report_metadata.extra_contact_info }}</div>
+  <div class="col-md-2"><h6>Report ID: </h6></div>
+  <div class="col-md-4">{{ data_dict.feedback.report_metadata.report_id }}</div>
+</div>
+<div class="row">
+  <div class="col-md-2"><h6>Date Range: </h6></div>
+  <div class="col-md-4">{{ data_dict.feedback.report_metadata.date_range.begin }} - {{ data_dict.feedback.report_metadata.date_range.end }}</div>
+  <div class="col-md-2"></div>
+  <div class="col-md-4"></div>
+</div>
+<div class="row">
+  <div class="col-md-2"><h6>Policy Published: </h6></div>
+  <div class="col-md-4">
+    <strong>domain:</strong> {{ data_dict.feedback.policy_published.domain }}<br>
+    <strong>adkim:</strong>  {{ data_dict.feedback.policy_published.adkim }}<br>
+    <strong>aspf:</strong>   {{ data_dict.feedback.policy_published.aspf }}<br>
+    <strong>p:</strong>   {{ data_dict.feedback.policy_published.p }}<br>
+    <strong>sp:</strong>   {{ data_dict.feedback.policy_published.sp }}<br>
+    <strong>pct:</strong>   {{ data_dict.feedback.policy_published.pct }}<br>
+  </div>
+  <div class="col-md-2"><h6></h6></div>
+  <div class="col-md-4"></div>
+</div>
+
+<h2>Details</h2>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Source IP:</th> 
+            <th>Count:</th> 
+            <h6>Policy evaluated</h6>
+            <th>disposition:</th> 
+            <th>dkim:</th> 
+            <th>spf: </th> 
+            <th>Indentifiers</th>
+            <th>header_from:</th> 
+            
+            <h6>Auth Results</h6>
+            <th>dkim:</th><br>
+            <th>domain:</th>  
+            <th>result:</th>  
+            <th>selector:</th> 
+            <th>spf:</th><br>
+            <th>domain:</th>  
+            <th>result:</th> 
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Source IP:</th> 
+            <th>Count:</th> 
+            <!-- <h6>Policy evaluated</h6> -->
+            <th>disposition:</th> 
+            <th>dkim:</th> 
+            <th>spf: </th> 
+            <th>Indentifiers</th>
+            <th>header_from:</th> 
+            
+            <!-- <h6>Auth Results</h6> -->
+            <th>dkim:</th><br>
+            <th>domain:</th>  
+            <th>result:</th>  
+            <th>selector:</th> 
+            <th>spf:</th><br>
+            <th>domain:</th>  
+            <th>result:</th> 
+          </tr>
+        </tfoot>
+        <tbody>
+          <h5>Record</h5>
+          {% for row in data_dict.feedback.record %}
+          <tr>
+
+          {% if forloop.first %}<div class="row">{% endif %}
+            <!-- <div class="col-md-4"> -->
+              
+            
+            
+            <td> {{ row.row.source_ip }} </td>
+            <td>{{ row.row.count }} </td>
+            <!-- <h6>Policy evaluated</h6> -->
+            <td>{{ row.row.policy_evaluated.disposition }}</td>
+            <td>{{ row.row.policy_evaluated.dkim }}</td>
+            <td>{{ row.row.policy_evaluated.spf}}</td>
+            <td>Indentifiers</td>
+            <td>{{ row.identifiers.header_from }} </td>
+            <!-- <h6>Auth Results</h6> -->
+            <td></td>
+            <td>{{ row.auth_results.dkim.domain }} </td>
+            <td>{{ row.auth_results.dkim.result }} </td>
+            <td>{{ row.auth_results.dkim.selector }} </td>
+            <td></td>
+            <td>{{ row.auth_results.spf.domain }}</td>
+            <td>{{ row.auth_results.spf.result }}</td>
+          <!-- </div> -->
+          
+          </tr>
+          
+          
+          
+          
+          {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+            {% if forloop.last %}</div>{% endif %}
+            {% endfor %}
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  {% endblock %}
+  
