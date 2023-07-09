@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "xmlreader",
+    "django.contrib.humanize"
 ]
 
 MIDDLEWARE = [

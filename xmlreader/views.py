@@ -27,6 +27,12 @@ def about(request):
     return render(request, "xmlreader/about.html", {"title": title})
 
 
+
+def charts(request):
+    title = "Charts"
+    return render(request, "xmlreader/charts.html", {"title": title})
+
+
 def tables(request):
     title = "Tables"
     return render(request, "xmlreader/tables.html", {"title": title})
